@@ -30,6 +30,10 @@ module Magick
           }
         }
       end
+
+      def sum = fold.(Magick::Maths::add).(0)
+
+      def length = fold.(->(acc) { ->(elem) { acc + 1 }}).(0)
     end
   end
 end

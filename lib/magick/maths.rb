@@ -69,6 +69,13 @@ module Magick
           }
         }
       end
+
+      def average
+        Smullyan::Birds::Phi.
+          (Magick::Maths::divide).
+          (Magick::Loops::sum).
+          (Magick::Loops::length)
+      end
     end
   end
 end

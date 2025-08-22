@@ -14,4 +14,12 @@ class TestLoops < Minitest::Test
     sum = Magick::Loops::fold.(Magick::Maths::add).(0)
     assert_equal 15, sum.(a)
   end
+
+  def test_sum
+    assert_equal 6, Magick::Loops::sum.([1,2,3])
+  end
+
+  def test_length
+    assert_equal 3, Magick::Loops::length.([1,2,3])
+  end
 end

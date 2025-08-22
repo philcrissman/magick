@@ -1,28 +1,43 @@
 # Magick
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/magick`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem is sort of a set of toys. It builds a sort of a set of functions which use lambdas and combinators (from the `smullyan` gem) to do things like arithmetic, map & fold implemented with the Y combinator, and an `average` function implemented with the Phi combinator.
 
 ## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle add magick
 ```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+gem install magick
 ```
 
 ## Usage
 
-TODO: Write usage instructions here
+This is more or less a set of functional toys that attempt to do something actually _useful_ with S-K-I combinators from `smullyan` along with some lambdas and _just enough_ Ruby. I didn't want to go as far as implementing Church numerals, so it's just using numbers from Ruby, as well as the `+` operator and the negation `-` operator; all other math operators (subtract, multiply, divide, etc.) are implemented in terms of `add` and `negate`, and each other. It uses the Y combinator whenever loops or recursion is required.
+
+Using a given function is verbose:
+
+```
+avg = Magick::Maths::average.([1, 2, 3])
+```
+
+but you could just create a local variable or constant to avoid always needing to type `Magick::[module]`:
+
+```
+average = Magick::Maths::average
+avg = average.([1,2,3])
+```
+
+Keep in mind that all the methods in the modules actually return lambdas, so using them requires `.()` or `.call()`.
+```
+```
+```
+```
 
 ## Development
 
