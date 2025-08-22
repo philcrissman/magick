@@ -28,6 +28,7 @@ module Magick
           }
         })
       end
+      alias :div :divide
 
       def mod
         Smullyan::Birds::Y.(->(f){
