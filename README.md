@@ -34,10 +34,6 @@ avg = average.([1,2,3])
 ```
 
 Keep in mind that all the methods in the modules actually return lambdas, so using them requires `.()` or `.call()`.
-```
-```
-```
-```
 
 ## Development
 
