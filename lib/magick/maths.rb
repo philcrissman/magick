@@ -1,9 +1,9 @@
 # maths
 
-# for addition, we'll just use Ruby
 module Magick
   module Maths
     class << self
+      # for addition, we'll just use Ruby
       def add = ->(x){ ->(y) { x + y }}
 
       def negate = ->(x) { -x }
