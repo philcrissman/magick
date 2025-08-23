@@ -47,4 +47,9 @@ class TestMaths < Minitest::Test
     # average should take a list as an argument
     assert_equal 2.0, Magick::Maths::average.([1,2,3])
   end
+
+  def test_powers_of_two
+    assert_equal 8, Magick::Maths::powers_of_two.(3)
+    assert_equal 32, Magick::Maths::powers_of_two.(5)
+  end
 end
