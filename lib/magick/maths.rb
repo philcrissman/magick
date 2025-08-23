@@ -11,11 +11,7 @@ module Magick
       def subtract = ->(x){ ->(y) { add.(x).(negate.(y)) }}
 
       def multiply
-        ->(a){
-          ->(b){
-            power.(a).(b).(add)
-          }
-        }
+        power.(add)
       end
       alias :mult :multiply
 
@@ -41,11 +37,7 @@ module Magick
       end
 
       def exp
-        ->(a){
-          ->(b){
-            power.(a).(b).(multiply)
-          }
-        }
+        power.(multiply)
       end
 
       def power
@@ -53,9 +45,9 @@ module Magick
         # operation. Powers of addition is equivalent
         # to multiplication; powers of multiplication
         # is equivalent to exponentiation
-        ->(base) { 
-          ->(exponent) {
-            ->(op) {
+        ->(op) { 
+          ->(base) {
+            ->(exponent) {
               Smullyan::Birds::Y.(->(f) {
                 ->(b) {
                   ->(e) {
@@ -76,6 +68,8 @@ module Magick
           (Magick::Loops::sum).
           (Magick::Loops::length)
       end
+
+      def powers_of_two = power.(multiply).(2)
     end
   end
 end

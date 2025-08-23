@@ -39,8 +39,8 @@ class TestMaths < Minitest::Test
   end
 
   def test_power
-    assert_equal 9, Magick::Maths::power.(3).(3).(Magick::Maths::add)
-    assert_equal 27, Magick::Maths::power.(3).(3).(Magick::Maths::multiply)
+    assert_equal 9, Magick::Maths::power.(Magick::Maths::add).(3).(3)
+    assert_equal 27, Magick::Maths::power.(Magick::Maths::multiply).(3).(3)
   end
 
   def test_average
