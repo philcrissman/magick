@@ -28,6 +28,10 @@ class TestMaths < Minitest::Test
     assert_equal 3, Magick::Maths::divide.(12).(4)
   end
 
+  def test_divide_to_f
+    assert_equal 2.5, Magick::Maths::div_to_f.(5).(2)
+  end
+
   def test_mod
     assert_equal 0, Magick::Maths::mod.(12).(3)
     assert_equal 1, Magick::Maths::mod.(11).(2)

@@ -26,6 +26,17 @@ module Magick
       end
       alias :div :divide
 
+      def div_to_f
+        ->(n){
+          ->(d){
+            # in order to get a float, we'll just
+            # use Ruby's `/` operator, and make sure
+            # at least one argument is cast to float.
+            n / d.to_f
+          }
+        }
+      end
+
       def mod
         Smullyan::Birds::Y.(->(f){
           ->(n){
@@ -64,7 +75,7 @@ module Magick
 
       def average
         Smullyan::Birds::Phi.
-          (Magick::Maths::divide).
+          (Magick::Maths::div_to_f).
           (Magick::Loops::sum).
           (Magick::Loops::length)
       end
