@@ -31,6 +31,7 @@ module Magick
         }
       end
 
+      # sum and fold both assume they will be given a list
       def sum = fold.(Magick::Maths::add).(0)
 
       def length = fold.(->(acc) { ->(elem) { acc + 1 }}).(0)
