@@ -56,4 +56,16 @@ class TestMaths < Minitest::Test
     assert_equal 8, Magick::Maths::powers_of_two.(3)
     assert_equal 32, Magick::Maths::powers_of_two.(5)
   end
+
+  def test_fibonacci
+    assert_equal 0, Magick::Maths::fibonacci.(0)
+    assert_equal 1, Magick::Maths::fibonacci.(1)
+    assert_equal 1, Magick::Maths::fibonacci.(2)
+    assert_equal 2, Magick::Maths::fibonacci.(3)
+    assert_equal 3, Magick::Maths::fibonacci.(4)
+    assert_equal 5, Magick::Maths::fibonacci.(5)
+    assert_equal 8, Magick::Maths::fibonacci.(6)
+    assert_equal 13, Magick::Maths::fibonacci.(7)
+    assert_equal 21, Magick::Maths::fibonacci.(8)
+  end
 end

@@ -81,6 +81,20 @@ module Magick
       end
 
       def powers_of_two = power.(multiply).(2)
+
+      # x and y are pairs of ints
+      def fibonacci_matrix_multiply = ->(x){
+        ->(y){
+          [x[0] * (y[1] + y[0]) + x[1] * y[0], x[0] * y[0] + x[1] * y[1]]
+        }
+      }
+
+      def fibonacci
+        ->(n){
+          n == 0 ? 0 :
+          power.(fibonacci_matrix_multiply).([1,0]).(n)[0]
+        }
+      end
     end
   end
 end
