@@ -11,7 +11,7 @@ module Magick
       def subtract = ->(x){ ->(y) { add.(x).(negate.(y)) }}
 
       def multiply
-        power.(add)
+        power_2.(add)
       end
       alias :mult :multiply
 
@@ -48,7 +48,7 @@ module Magick
       end
 
       def exp
-        power.(multiply)
+        power_2.(multiply)
       end
 
       def power
@@ -73,6 +73,60 @@ module Magick
         }
       end
 
+      # power, as written, will have a stack trace error if we try to 
+      # do something like power.(mult).(2).(32)
+      # If we eliminate the recursion, we can avoid this, but it means we need
+      # to use some regular Ruby constructs (eg, `while`, instead of the Y combinator)
+      # The following is essentially how Stepanov & McJones define `power` in 
+      # Elements of Programming
+      def power_accumulate_positive
+        ->(op){
+          ->(r){
+            ->(a){
+              ->(n){
+                while (true)
+                  if n % 2 != 0
+                    r = op.(r).(a)
+                    return r if n == 1
+                  end
+                  a = op.(a).(a)
+                  n = n/2
+                end
+              }
+            }
+          }
+        }
+      end
+
+      def power_accumulate
+        ->(op){
+          ->(r){
+            ->(n){
+              ->(a){
+                return r if n == 0
+                power_accumulate_positive.(op).(r).(n).(a)
+              }
+            }
+          }
+        }
+      end
+
+      def power_2
+        ->(op){
+          ->(b){
+            ->(e){
+              while (e % 2 == 0)
+                b = op.(b).(b)
+                e = e/2
+              end
+              e = e / 2
+              return b if e == 0
+              power_accumulate.(op).(b).(op.(b).(b)).(e)
+            }
+          }
+        }
+      end
+
       def average
         Smullyan::Birds::Phi.
           (Magick::Maths::div_to_f).
@@ -80,19 +134,24 @@ module Magick
           (Magick::Loops::length)
       end
 
-      def powers_of_two = power.(multiply).(2)
+      def powers_of_two = exp.(2)
 
       # x and y are pairs of ints
       def fibonacci_matrix_multiply = ->(x){
         ->(y){
-          [x[0] * (y[1] + y[0]) + x[1] * y[0], x[0] * y[0] + x[1] * y[1]]
+          [
+            x[0] * (y[1] + y[0]) +
+              x[1] * y[0], 
+            x[0] * y[0] +
+              x[1] * y[1]
+          ]
         }
       }
 
       def fibonacci
         ->(n){
           n == 0 ? 0 :
-          power.(fibonacci_matrix_multiply).([1,0]).(n)[0]
+          power_2.(fibonacci_matrix_multiply).([1,0]).(n)[0]
         }
       end
     end

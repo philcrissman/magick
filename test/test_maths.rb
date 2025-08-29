@@ -55,6 +55,9 @@ class TestMaths < Minitest::Test
   def test_powers_of_two
     assert_equal 8, Magick::Maths::powers_of_two.(3)
     assert_equal 32, Magick::Maths::powers_of_two.(5)
+    assert_equal 65536, Magick::Maths::powers_of_two.(16)
+    # make sure this won't stack overflow
+    assert_equal 4294967296, Magick::Maths::powers_of_two.(32)
   end
 
   def test_fibonacci
