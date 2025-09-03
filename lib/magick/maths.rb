@@ -15,11 +15,12 @@ module Magick
       end
       alias :mult :multiply
 
+      # See note on `mod`
       def divide
         Smullyan::Birds::Y.(->(f){ 
           ->(n){ 
             ->(d){ 
-              n < d ? 0 : 1 + f.(n - d).(d)
+              n < d ? 0 : 1 + f.(subtract.(n).(d)).(d)
             }
           }
         })
@@ -37,11 +38,16 @@ module Magick
         }
       end
 
+      # This implementation of mod _works_ but is mostly 
+      # provided as a curiousity: ie, how could we implement 
+      # modulus with the Y combinator and repeated subtraction?
+      # It isn't efficient, as you will find if you ever try, say,
+      # mod.(65536).(2)
       def mod
         Smullyan::Birds::Y.(->(f){
           ->(n){
             ->(d){
-              n < d ? n : f.(n - d).(d)
+              n < d ? n : f.(subtract.(n).(d)).(d)
             }
           }
         })
@@ -90,7 +96,7 @@ module Magick
                     return r if n == 1
                   end
                   a = op.(a).(a)
-                  n = n/2
+                  n = div.(n).(2)
                 end
               }
             }
@@ -119,7 +125,7 @@ module Magick
                 b = op.(b).(b)
                 e = e/2
               end
-              e = e / 2
+              e = e/2
               return b if e == 0
               power_accumulate.(op).(b).(op.(b).(b)).(e)
             }
@@ -127,6 +133,8 @@ module Magick
         }
       end
 
+      # average expects an array
+      # eg: average.([1,2,3]) => 2.0
       def average
         Smullyan::Birds::Phi.
           (Magick::Maths::div_to_f).
