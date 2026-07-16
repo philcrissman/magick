@@ -27,6 +27,14 @@ module Magick
       end
       alias :div :divide
 
+      def div
+        ->(n){
+          ->(d){
+            n/d
+          }
+        }
+      end
+
       def div_to_f
         ->(n){
           ->(d){
@@ -69,8 +77,8 @@ module Magick
                 ->(b) {
                   ->(e) {
                     e == 1 ? b :
-                    mod.(e).(2) == 0 ? f.(op.(b).(b)).(divide.(e).(2)) :
-                    op.(f.(op.(b).(b)).(divide.(e).(2))).(b)
+                    mod.(e).(2) == 0 ? f.(op.(b).(b)).(div.(e).(2)) :
+                    op.(f.(op.(b).(b)).(div.(e).(2))).(b)
                   }
                 }
               }).(base).(exponent)
